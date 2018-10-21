@@ -19,7 +19,7 @@ def hasPythonPlugin = project.hasProperty('pythonPlugin')
 
 intellij {
     version ideaVersion
-    pluginName 'intellij-micropython'
+    pluginName 'intellij-mpfshell'
     downloadSources Boolean.valueOf(downloadIdeaSources)
     updateSinceUntilBuild false
     plugins = ['terminal']
@@ -59,7 +59,7 @@ task copyStubs(dependsOn: prepareSandbox, type: Copy) {
         include "typehints/"
         include "scripts/"
     }
-    into "${intellij.sandboxDirectory}/plugins/intellij-micropython"
+    into "${intellij.sandboxDirectory}/plugins/intellij-mpfshell"
 }
 
 buildPlugin.dependsOn copyStubs
