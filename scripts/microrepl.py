@@ -32,7 +32,7 @@ def main():
     
     from mp.mpfshell import main
 
-    sys.argv = [sys.argv[0], '-c', 'open', sys.argv[1] + ';', 'repl;', '-n']
+    sys.argv = [sys.argv[0], '-c', 'open', sys.argv[1] + ';', 'repl;', '-n', '--nocolor']
     main()
 
 if __name__ == '__main__':

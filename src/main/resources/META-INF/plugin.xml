@@ -1,10 +1,10 @@
 <idea-plugin url="https://github.com/junhuanchen/intellij-mpfshell">
   <name>mpfshell</name>
-  <id>intellij-mpfshell</id>
+  <id>Intellij-Mpfshell</id>
   <change-notes><![CDATA[
       <p>1.1.1:</p>
       <ul>
-        <li>Renamed from mpfshell to mpfshell because the official project did not merge the mpfshell.</li>
+        <li>Renamed from micropython to mpfshell because the official project did not merge the mpfshell.</li>
       </ul>
       <p>1.1.0:</p>
       <ul>
@@ -62,18 +62,19 @@
       </ul>
     ]]></change-notes>
   <description><![CDATA[
-      <p>Support for mpfshell devices in IntelliJ IDEA and PyCharm.</p>
+      <p>Support for Mpfshell devices in IntelliJ IDEA and PyCharm.</p>
       <p>Features:</p>
       <ul>
-        <li>Code completion and docs for some ESP8266, Pyboard, and mpfshell modules</li>
+        <li>Code completion and docs for some ESP8266, Pyboard, and MicroPython modules</li>
         <li>Flash a Python file or directory to a device</li>
         <li>Run REPL on a device</li>
       </ul>
       <p>Currently the plugin supports ESP8266, Pyboard, and Micro:bit devices. Your feedback and contributions are
-        welcome! See <a href="https://github.com/junhuanchen/intellij-mpfshell">the project page</a> on GitHub.</p>
+        welcome! See <a href="https://github.com/junhuanchen/intellij-mpfshell">the project page</a> on GitHub.
+      </p>
     ]]></description>
   <version>SNAPSHOT</version>
-  <vendor>JetBrains</vendor>
+  <vendor>Jetbrains</vendor>
 
   <depends>com.intellij.modules.lang</depends>
   <depends>com.intellij.modules.python</depends>
@@ -109,14 +110,14 @@
   </extensions>
 
   <actions>
-    <group text="mpfshell" id="mpfshell" popup="true" icon="/Logo.png">
+    <group text="Mpfshell" id="Mpfshell" popup="true" icon="/Logo.png">
       <add-to-group group-id="ToolsMenu"/>
       <action class="com.jetbrains.mpfshell.actions.RunMicroReplAction" id="RunMicroReplAction"
-              text="mpfshell REPL" description="Run mpfshell REPL in Terminal" icon="/Logo.png"/>
+              text="Mpfshell REPL" description="Run Mpfshell REPL in Terminal" icon="/Logo.png"/>
       <!--<action class="com.jetbrains.mpfshell.actions.RemoveAllFilesFromDeviceAction" id="IntoMf"-->
               <!--text="Remove All Files from mpfshell Device"/>-->
       <action class="com.jetbrains.mpfshell.actions.RunMpfshellAction" id="RunMpfshellAction"
-              text="mpfshell Mpfshell" description="Run mpfshell Mpfshell in Terminal" icon="/Logo.png"/>
+              text="Mpfshell Tools" description="Run Mpfshell Tools in Terminal" icon="/Logo.png"/>
     </group>
   </actions>
 </idea-plugin>

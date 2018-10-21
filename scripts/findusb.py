@@ -38,6 +38,7 @@ def parse_id(arg: str) -> Tuple[int, int]:
 
 
 def main() -> None:
+    # print(sys.argv)
     if len(sys.argv) < 2:
         print('Usage: findusb.py vendor_id:port_id...', file=sys.stderr)
         sys.exit(1)
@@ -47,4 +48,5 @@ def main() -> None:
 
 
 if __name__ == '__main__':
+    main()
     main()

@@ -33,6 +33,7 @@ import sys
 import serial
 import logging
 import platform
+import time
 
 from mp import version
 from mp.mpfexp import MpFileExplorer
@@ -145,6 +146,11 @@ class MpFileShell(cmd.Cmd):
             logging.error(e)
             self.__error("Failed to open: %s" % port)
 
+        if self.__is_open() == False:
+            time.sleep(3)
+            self.__connect(None)
+
+
 
     def __reconnect(self):
         import time
@@ -153,7 +159,7 @@ class MpFileShell(cmd.Cmd):
             if self.__is_open():
                 break
             print(colorama.Fore.GREEN + 'try reconnect... ' + colorama.Fore.RESET)
-            time.sleep(1)
+            time.sleep(3)
 
     def __disconnect(self):
 
@@ -219,9 +225,11 @@ class MpFileShell(cmd.Cmd):
 
                 if platform.system() == "Windows":
                     args = "ser:" + args
+                elif '/dev' in args:
+                    args = "ser:" + args
                 else:
                     args = "ser:/dev/" + args
-                
+
             self.open_args = args
 
             self.__connect(args)
@@ -601,21 +609,45 @@ class MpFileShell(cmd.Cmd):
         """
         if self.__is_open():
             try:
-                try:
-                    self.fe.keyboard_interrupt()
-                    self.do_exec("execfile('%s')" % args)
-                except KeyboardInterrupt as e:
-                    self.fe.keyboard_interrupt()
-
-                try:
-                    ret = self.fe.follow(2)
-                    if len(ret[-1]):
-                        self.__error(str(ret[-1].decode('utf-8')))
-                except PyboardError:
-                    pass
+                self.do_exec("execfile('%s')" % args)
+                ret = self.fe.follow(2)
+                if len(ret[-1]):
+                    self.__error(str(ret[-1].decode('utf-8')))
+            except KeyboardInterrupt as e:
+                self.fe.keyboard_interrupt()
+            except PyboardError as e:
+                print(e)
             finally:
                 if(self.open_args.startswith("ser:")):
                     self.__reconnect()
+                if(self.__is_open()):
+                    self.fe.enter_raw_repl()
+
+    def do_lef(self, args):
+        self.do_lexecfile(args)
+
+    def do_lexecfile(self, args):
+        """execfile(ef) <LOCAL FILE>
+        Execute a Python filename on local.
+        """
+        if self.__is_open():
+
+            s_args = self.__parse_file_names(args)
+            if not s_args:
+                return
+            elif len(s_args) > 1:
+                self.__error("Only one ore one arguments allowed: <LOCAL FILE> ")
+                return
+
+            lfile_name = s_args[0]
+
+            try:
+                self.fe.put(lfile_name, lfile_name)
+
+                self.do_repl('execfile("{0}")\r\n'.format(args))
+
+            except IOError as e:
+                self.__error(str(e))
 
     def do_e(self, args):
         self.do_exec(args)
@@ -643,6 +675,8 @@ class MpFileShell(cmd.Cmd):
             except IOError as e:
                 self.__error(str(e))
             except PyboardError as e:
+                self.__error(str(e))
+            except Exception as e:
                 self.__error(str(e))
 
     def do_r(self, args):
@@ -689,8 +723,11 @@ class MpFileShell(cmd.Cmd):
                 print("\n*** Exit REPL with Ctrl+] ***")
 
             try:
+                if args != None:
+                    self.fe.con.write(bytes(args, encoding = "utf8"))
                 self.repl.join(True)
-            except Exception:
+            except Exception as e:
+                # print(e)
                 pass
 
             self.repl.console.cleanup()
