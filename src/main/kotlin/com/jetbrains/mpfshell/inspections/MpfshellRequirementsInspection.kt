@@ -21,15 +21,15 @@ import com.intellij.facet.ui.FacetConfigurationQuickFix
 import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
-import com.jetbrains.mpfshell.settings.microPythonFacet
+import com.jetbrains.mpfshell.settings.mpfshellFacet
 
 /**
  * @author vlan
  */
-class MicroPythonRequirementsInspection : LocalInspectionTool() {
+class MpfshellRequirementsInspection : LocalInspectionTool() {
   override fun checkFile(file: PsiFile, manager: InspectionManager, isOnTheFly: Boolean): Array<ProblemDescriptor>? {
     val module = ModuleUtilCore.findModuleForPsiElement(file) ?: return null
-    val facet = module.microPythonFacet ?: return null
+    val facet = module.mpfshellFacet ?: return null
     val result = facet.checkValid()
     if (result.isOk) return null
     val facetFix: FacetConfigurationQuickFix? = result.quickFix

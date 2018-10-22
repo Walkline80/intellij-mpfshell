@@ -21,28 +21,28 @@ import com.intellij.execution.configurations.ConfigurationType
 import com.intellij.execution.configurations.ConfigurationTypeUtil
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.openapi.project.Project
-import com.jetbrains.mpfshell.settings.MicroPythonFacetType
+import com.jetbrains.mpfshell.settings.MpfshellFacetType
 import com.jetbrains.python.run.PythonConfigurationFactoryBase
 import javax.swing.Icon
 
 /**
  * @author Mikhail Golubev
  */
-class MicroPythonConfigurationType : ConfigurationType {
+class MpfshellConfigurationType : ConfigurationType {
   companion object {
-    fun getInstance(): MicroPythonConfigurationType =
-        ConfigurationTypeUtil.findConfigurationType(MicroPythonConfigurationType::class.java)
+    fun getInstance(): MpfshellConfigurationType =
+        ConfigurationTypeUtil.findConfigurationType(MpfshellConfigurationType::class.java)
   }
   
   private val factory = object : PythonConfigurationFactoryBase(this) {
-    override fun createTemplateConfiguration(project: Project): RunConfiguration = MicroPythonRunConfiguration(project, this)
+    override fun createTemplateConfiguration(project: Project): RunConfiguration = MpfshellRunConfiguration(project, this)
   }
 
-  override fun getIcon(): Icon = MicroPythonFacetType.LOGO
+  override fun getIcon(): Icon = MpfshellFacetType.LOGO
 
   override fun getConfigurationTypeDescription(): String = "mpfshell run configuration"
 
-  override fun getId(): String = "MicroPythonConfigurationType"
+  override fun getId(): String = "MpfshellConfigurationType"
 
   override fun getDisplayName(): String = "mpfshell"
 

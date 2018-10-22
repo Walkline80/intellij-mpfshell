@@ -16,15 +16,15 @@
 
 package com.jetbrains.mpfshell.actions
 
-import com.jetbrains.mpfshell.settings.MicroPythonFacet
+import com.jetbrains.mpfshell.settings.MpfshellFacet
 
 /**
  * @author Mikhail Golubev
  */
-class RunMpfshellAction : MicroPythonCommandAction() {
-  override fun getCommand(facet: MicroPythonFacet): List<String>? {
+class RunMpfshellToolsAction : MpfshellCommandAction() {
+  override fun getCommand(facet: MpfshellFacet): List<String>? {
     val pythonPath = facet.pythonPath ?: return null
     val devicePath = facet.devicePath ?: return null
-    return listOf(pythonPath, "${MicroPythonFacet.scriptsPath}/micrompfshell.py", devicePath)
+    return listOf(pythonPath, "${MpfshellFacet.scriptsPath}/micrompfshell.py", devicePath)
   }
 }

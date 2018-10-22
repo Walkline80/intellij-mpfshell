@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.jetbrains.mpfshell.actions
+package com.jetbrains.mpfshell.settings
 
-import com.jetbrains.mpfshell.settings.MicroPythonFacet
+import com.intellij.application.options.ModuleAwareProjectConfigurable
+import com.intellij.openapi.module.Module
+import com.intellij.openapi.options.Configurable
+import com.intellij.openapi.project.Project
 
 /**
- * @author Mikhail Golubev
+ * @author vlan
  */
-class RunMicroReplAction : MicroPythonCommandAction() {
-  override fun getCommand(facet: MicroPythonFacet): List<String>? {
-    val pythonPath = facet.pythonPath ?: return null
-    val devicePath = facet.devicePath ?: return null
-    return listOf(pythonPath, "${MicroPythonFacet.scriptsPath}/microrepl.py", devicePath)
-  }
+class MpfshellProjectConfigurable(project: Project)
+  : ModuleAwareProjectConfigurable<Configurable>(project, "mpfshell", null) {
+
+  override fun createModuleConfigurable(module: Module?) = MpfshellModuleConfigurable(module!!)
 }

@@ -22,10 +22,10 @@ import javax.swing.JComponent
 /**
  * @author vlan
  */
-class MicroPythonFacetEditorTab(val configuration: MicroPythonFacetConfiguration,
-                                private val facet: MicroPythonFacet) : FacetEditorTab() {
-  private val panel: MicroPythonSettingsPanel by lazy {
-    MicroPythonSettingsPanel(facet.module)
+class MpfshellFacetEditorTab(val configuration: MpfshellFacetConfiguration,
+                             private val facet: MpfshellFacet) : FacetEditorTab() {
+  private val panel: MpfshellSettingsPanel by lazy {
+    MpfshellSettingsPanel(facet.module)
   }
 
   override fun isModified(): Boolean = panel.isModified(configuration, facet)

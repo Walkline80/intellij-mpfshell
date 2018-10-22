@@ -21,23 +21,23 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.openapi.extensions.Extensions
 import com.intellij.openapi.projectRoots.Sdk
-import com.jetbrains.mpfshell.run.MicroPythonRunConfiguration
-import com.jetbrains.mpfshell.settings.MicroPythonTypeHints
-import com.jetbrains.mpfshell.settings.MicroPythonUsbId
+import com.jetbrains.mpfshell.run.MpfshellRunConfiguration
+import com.jetbrains.mpfshell.settings.MpfshellTypeHints
+import com.jetbrains.mpfshell.settings.MpfshellUsbId
 import com.jetbrains.python.packaging.PyRequirement
 
 /**
  * @author vlan
  */
-interface MicroPythonDeviceProvider {
+interface MpfshellDeviceProvider {
   companion object {
-    private val EP_NAME: ExtensionPointName<MicroPythonDeviceProvider> =
+    private val EP_NAME: ExtensionPointName<MpfshellDeviceProvider> =
         ExtensionPointName.create("com.jetbrains.mpfshell.deviceProvider")
 
-    val providers: Array<MicroPythonDeviceProvider>
+    val providers: Array<MpfshellDeviceProvider>
       get() = Extensions.getExtensions(EP_NAME)
 
-    val default: MicroPythonDeviceProvider
+    val default: MpfshellDeviceProvider
       get() = providers.first { it.isDefault }
   }
 
@@ -45,7 +45,7 @@ interface MicroPythonDeviceProvider {
 
   val documentationURL: String
 
-  val usbIds: List<MicroPythonUsbId>
+  val usbIds: List<MpfshellUsbId>
     get() = emptyList()
 
   val presentableName: String
@@ -53,13 +53,13 @@ interface MicroPythonDeviceProvider {
 
   fun getPackageRequirements(sdk: Sdk): List<PyRequirement> = emptyList()
 
-  val typeHints: MicroPythonTypeHints?
+  val typeHints: MpfshellTypeHints?
     get() = null
 
   val detectedModuleNames: Set<String>
     get() = emptySet()
 
-  fun getRunCommandLineState(configuration: MicroPythonRunConfiguration,
+  fun getRunCommandLineState(configuration: MpfshellRunConfiguration,
                              environment: ExecutionEnvironment): CommandLineState? = null
 
   val isDefault: Boolean

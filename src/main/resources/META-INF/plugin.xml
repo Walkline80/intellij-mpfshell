@@ -84,23 +84,23 @@
 
   <extensionPoints>
     <extensionPoint qualifiedName="com.jetbrains.mpfshell.deviceProvider"
-                    interface="com.jetbrains.mpfshell.devices.MicroPythonDeviceProvider"/>
+                    interface="com.jetbrains.mpfshell.devices.MpfshellDeviceProvider"/>
   </extensionPoints>
 
   <extensions defaultExtensionNs="com.intellij">
-    <facetType implementation="com.jetbrains.mpfshell.settings.MicroPythonFacetType"/>
-    <framework.detector implementation="com.jetbrains.mpfshell.settings.MicroPythonFacetDetector"/>
-    <configurationType implementation="com.jetbrains.mpfshell.run.MicroPythonConfigurationType"/>
-    <runConfigurationProducer implementation="com.jetbrains.mpfshell.run.MicroPythonRunConfigurationProducer"/>
+    <facetType implementation="com.jetbrains.mpfshell.settings.MpfshellFacetType"/>
+    <framework.detector implementation="com.jetbrains.mpfshell.settings.MpfshellFacetDetector"/>
+    <configurationType implementation="com.jetbrains.mpfshell.run.MpfshellConfigurationType"/>
+    <runConfigurationProducer implementation="com.jetbrains.mpfshell.run.MpfshellRunConfigurationProducer"/>
     <projectConfigurable groupId="language"
                          id="com.jetbrains.mpfshell.configurable"
-                         provider="com.jetbrains.mpfshell.settings.MicroPythonConfigurableProvider"/>
-    <projectService serviceImplementation="com.jetbrains.mpfshell.settings.MicroPythonDevicesConfiguration"/>
+                         provider="com.jetbrains.mpfshell.settings.MpfshellConfigurableProvider"/>
+    <projectService serviceImplementation="com.jetbrains.mpfshell.settings.MpfshellDevicesConfiguration"/>
     <localInspection language="Python"
                      displayName="mpfshell requirements inspection"
                      groupName="mpfshell"
                      enabledByDefault="true"
-                     implementationClass="com.jetbrains.mpfshell.inspections.MicroPythonRequirementsInspection"/>
+                     implementationClass="com.jetbrains.mpfshell.inspections.MpfshellRequirementsInspection"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.mpfshell">
@@ -112,11 +112,11 @@
   <actions>
     <group text="Mpfshell" id="Mpfshell" popup="true" icon="/Logo.png">
       <add-to-group group-id="ToolsMenu"/>
-      <action class="com.jetbrains.mpfshell.actions.RunMicroReplAction" id="RunMicroReplAction"
+      <action class="com.jetbrains.mpfshell.actions.RunMpfshellReplAction" id="RunMpfshellReplAction"
               text="Mpfshell REPL" description="Run Mpfshell REPL in Terminal" icon="/Logo.png"/>
       <!--<action class="com.jetbrains.mpfshell.actions.RemoveAllFilesFromDeviceAction" id="IntoMf"-->
               <!--text="Remove All Files from mpfshell Device"/>-->
-      <action class="com.jetbrains.mpfshell.actions.RunMpfshellAction" id="RunMpfshellAction"
+      <action class="com.jetbrains.mpfshell.actions.RunMpfshellToolsAction" id="RunMpfshellToolsAction"
               text="Mpfshell Tools" description="Run Mpfshell Tools in Terminal" icon="/Logo.png"/>
     </group>
   </actions>

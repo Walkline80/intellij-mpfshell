@@ -26,7 +26,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.FormBuilder
 import javax.swing.JComponent
 
-class MicroPythonRunConfigurationEditor(config: MicroPythonRunConfiguration) : SettingsEditor<MicroPythonRunConfiguration>() {
+class MpfshellRunConfigurationEditor(config: MpfshellRunConfiguration) : SettingsEditor<MpfshellRunConfiguration>() {
   private val pathField = TextFieldWithBrowseButton()
 
   init {
@@ -46,11 +46,11 @@ class MicroPythonRunConfigurationEditor(config: MicroPythonRunConfiguration) : S
           .addLabeledComponent("Path:", pathField)
           .panel
 
-  override fun applyEditorTo(s: MicroPythonRunConfiguration) {
+  override fun applyEditorTo(s: MpfshellRunConfiguration) {
     s.path = pathField.text
   }
 
-  override fun resetEditorFrom(s: MicroPythonRunConfiguration) {
+  override fun resetEditorFrom(s: MpfshellRunConfiguration) {
     pathField.text = s.path
   }
 }

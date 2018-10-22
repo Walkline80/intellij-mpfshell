@@ -21,25 +21,25 @@ import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.OSProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.projectRoots.Sdk
-import com.jetbrains.mpfshell.run.MicroPythonRunConfiguration
-import com.jetbrains.mpfshell.settings.MicroPythonTypeHints
-import com.jetbrains.mpfshell.settings.MicroPythonUsbId
-import com.jetbrains.mpfshell.settings.microPythonFacet
+import com.jetbrains.mpfshell.run.MpfshellRunConfiguration
+import com.jetbrains.mpfshell.settings.MpfshellTypeHints
+import com.jetbrains.mpfshell.settings.MpfshellUsbId
+import com.jetbrains.mpfshell.settings.mpfshellFacet
 import com.jetbrains.python.packaging.PyPackageManager
 import com.jetbrains.python.packaging.PyRequirement
 
 /**
  * @author vlan
  */
-class MicroBitDeviceProvider : MicroPythonDeviceProvider {
+class MicroBitDeviceProvider : MpfshellDeviceProvider {
   override val persistentName: String
     get() = "Micro:bit"
 
   override val documentationURL: String
     get() = "https://github.com/vlasovskikh/intellij-micropython/wiki/BBC-Micro:bit"
 
-  override val usbIds: List<MicroPythonUsbId>
-    get() = listOf(MicroPythonUsbId(0x0D28, 0x0204))
+  override val usbIds: List<MpfshellUsbId>
+    get() = listOf(MpfshellUsbId(0x0D28, 0x0204))
 
   override fun getPackageRequirements(sdk: Sdk): List<PyRequirement> {
     val manager = PyPackageManager.getInstance(sdk)
@@ -47,16 +47,16 @@ class MicroBitDeviceProvider : MicroPythonDeviceProvider {
                                         |pyserial>=3.3,<4.0""".trimMargin())
   }
 
-  override val typeHints: MicroPythonTypeHints by lazy {
-    MicroPythonTypeHints(listOf("microbit"))
+  override val typeHints: MpfshellTypeHints by lazy {
+    MpfshellTypeHints(listOf("microbit"))
   }
 
   override val detectedModuleNames: Set<String>
     get() = linkedSetOf("microbit")
 
-  override fun getRunCommandLineState(configuration: MicroPythonRunConfiguration,
+  override fun getRunCommandLineState(configuration: MpfshellRunConfiguration,
                                       environment: ExecutionEnvironment): CommandLineState? {
-    val pythonPath = configuration.module?.microPythonFacet?.pythonPath ?: return null
+    val pythonPath = configuration.module?.mpfshellFacet?.pythonPath ?: return null
     return object : CommandLineState(environment) {
       override fun startProcess() =
           OSProcessHandler(GeneralCommandLine(pythonPath, "-m", "uflash", configuration.path))

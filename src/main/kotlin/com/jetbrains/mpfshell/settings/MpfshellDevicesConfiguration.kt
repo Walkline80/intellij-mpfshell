@@ -9,11 +9,11 @@ import com.intellij.util.xmlb.annotations.Attribute
  * @author vlan
  */
 @State(name = "MicroPythonDevices", storages = arrayOf(Storage(StoragePathMacros.WORKSPACE_FILE)))
-class MicroPythonDevicesConfiguration : PersistentStateComponent<MicroPythonDevicesConfiguration> {
+class MpfshellDevicesConfiguration : PersistentStateComponent<MpfshellDevicesConfiguration> {
 
   companion object {
-    fun getInstance(project: Project): MicroPythonDevicesConfiguration =
-        ServiceManager.getService(project, MicroPythonDevicesConfiguration::class.java)
+    fun getInstance(project: Project): MpfshellDevicesConfiguration =
+        ServiceManager.getService(project, MpfshellDevicesConfiguration::class.java)
   }
 
   // Currently the device path is stored per project, not per module
@@ -21,7 +21,7 @@ class MicroPythonDevicesConfiguration : PersistentStateComponent<MicroPythonDevi
 
   override fun getState() = this
 
-  override fun loadState(state: MicroPythonDevicesConfiguration) {
+  override fun loadState(state: MpfshellDevicesConfiguration) {
     XmlSerializerUtil.copyBean(state, this)
   }
 }

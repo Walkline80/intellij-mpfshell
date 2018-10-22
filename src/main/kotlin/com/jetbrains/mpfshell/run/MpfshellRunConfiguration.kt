@@ -30,24 +30,24 @@ import com.intellij.openapi.util.text.StringUtil
 import com.intellij.openapi.vfs.StandardFileSystems
 import com.intellij.util.PathUtil
 import com.intellij.util.attribute
-import com.jetbrains.mpfshell.settings.microPythonFacet
+import com.jetbrains.mpfshell.settings.mpfshellFacet
 import org.jdom.Element
 
 /**
  * @author Mikhail Golubev
  */
-class MicroPythonRunConfiguration(project: Project, factory: ConfigurationFactory)
+class MpfshellRunConfiguration(project: Project, factory: ConfigurationFactory)
   : AbstractRunConfiguration(project, factory), RunConfigurationWithSuppressedDefaultDebugAction {
 
   var path: String = ""
   
   override fun getValidModules() =
-      allModules.filter { it.microPythonFacet != null }.toMutableList()
+      allModules.filter { it.mpfshellFacet != null }.toMutableList()
 
-  override fun getConfigurationEditor() = MicroPythonRunConfigurationEditor(this)
+  override fun getConfigurationEditor() = MpfshellRunConfigurationEditor(this)
 
   override fun getState(executor: Executor, environment: ExecutionEnvironment) =
-      module?.microPythonFacet?.configuration?.deviceProvider?.getRunCommandLineState(this, environment)
+      module?.mpfshellFacet?.configuration?.deviceProvider?.getRunCommandLineState(this, environment)
 
   override fun checkConfiguration() {
     super.checkConfiguration()
@@ -55,7 +55,7 @@ class MicroPythonRunConfiguration(project: Project, factory: ConfigurationFactor
       throw RuntimeConfigurationError("Path is not specified")
     }
     val m = module ?: throw RuntimeConfigurationError("Module for path is not found")
-    val facet = m.microPythonFacet ?:
+    val facet = m.mpfshellFacet ?:
         throw RuntimeConfigurationError("mpfshell support is not enabled for selected module")
     val validationResult = facet.checkValid()
     if (validationResult != ValidationResult.OK) {

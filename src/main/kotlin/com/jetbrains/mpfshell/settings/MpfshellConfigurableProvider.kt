@@ -23,8 +23,8 @@ import com.intellij.util.PlatformUtils
 /**
  * @author vlan
  */
-class MicroPythonConfigurableProvider(val project: Project) : ConfigurableProvider() {
-  override fun createConfigurable() = MicroPythonProjectConfigurable(project)
+class MpfshellConfigurableProvider(val project: Project) : ConfigurableProvider() {
+  override fun createConfigurable() = MpfshellProjectConfigurable(project)
 
   override fun canCreateConfigurable() = PlatformUtils.isPyCharm()
 }

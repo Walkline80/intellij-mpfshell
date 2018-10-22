@@ -21,29 +21,29 @@ import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.OSProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.openapi.projectRoots.Sdk
-import com.jetbrains.mpfshell.run.MicroPythonRunConfiguration
-import com.jetbrains.mpfshell.settings.MicroPythonFacet
-import com.jetbrains.mpfshell.settings.MicroPythonTypeHints
-import com.jetbrains.mpfshell.settings.MicroPythonUsbId
-import com.jetbrains.mpfshell.settings.microPythonFacet
+import com.jetbrains.mpfshell.run.MpfshellRunConfiguration
+import com.jetbrains.mpfshell.settings.MpfshellFacet
+import com.jetbrains.mpfshell.settings.MpfshellTypeHints
+import com.jetbrains.mpfshell.settings.MpfshellUsbId
+import com.jetbrains.mpfshell.settings.mpfshellFacet
 import com.jetbrains.python.packaging.PyPackageManager
 import com.jetbrains.python.packaging.PyRequirement
 
 /**
  * @author stefanhoelzl
  */
-class PyboardDeviceProvider : MicroPythonDeviceProvider {
+class PyboardDeviceProvider : MpfshellDeviceProvider {
   override val persistentName: String
     get() = "Pyboard"
 
   override val documentationURL: String
     get() = "https://github.com/vlasovskikh/intellij-micropython/wiki/Pyboard"
 
-  override val usbIds: List<MicroPythonUsbId>
-    get() = listOf(MicroPythonUsbId(0xF055, 0x9800))
+  override val usbIds: List<MpfshellUsbId>
+    get() = listOf(MpfshellUsbId(0xF055, 0x9800))
 
-  override val typeHints: MicroPythonTypeHints by lazy {
-    MicroPythonTypeHints(listOf("stdlib", "mpfshell"))
+  override val typeHints: MpfshellTypeHints by lazy {
+    MpfshellTypeHints(listOf("stdlib", "mpfshell"))
   }
 
   override fun getPackageRequirements(sdk: Sdk): List<PyRequirement> {
@@ -53,16 +53,16 @@ class PyboardDeviceProvider : MicroPythonDeviceProvider {
                                         |websocket_client>=0.34.0,<0.52.0""".trimMargin())
   }
 
-  override fun getRunCommandLineState(configuration: MicroPythonRunConfiguration,
+  override fun getRunCommandLineState(configuration: MpfshellRunConfiguration,
                                       environment: ExecutionEnvironment): CommandLineState? {
-    val facet = configuration.module?.microPythonFacet ?: return null
+    val facet = configuration.module?.mpfshellFacet ?: return null
     val pythonPath = facet.pythonPath ?: return null
     val devicePath = facet.devicePath ?: return null
     val rootPath = configuration.project.basePath ?: return null
     return object : CommandLineState(environment) {
       override fun startProcess() =
           OSProcessHandler(GeneralCommandLine(pythonPath,
-                                              "${MicroPythonFacet.scriptsPath}/microupload.py",
+                                              "${MpfshellFacet.scriptsPath}/microupload.py",
                                               "-C",
                                               rootPath,
                                               "-v",

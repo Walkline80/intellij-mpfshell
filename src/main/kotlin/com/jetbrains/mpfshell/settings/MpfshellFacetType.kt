@@ -28,22 +28,22 @@ import javax.swing.Icon
 /**
  * @author vlan
  */
-class MicroPythonFacetType : FacetType<MicroPythonFacet, MicroPythonFacetConfiguration>(ID, STRING_ID, PRESENTABLE_NAME) {
+class MpfshellFacetType : FacetType<MpfshellFacet, MpfshellFacetConfiguration>(ID, STRING_ID, PRESENTABLE_NAME) {
 
   companion object {
     val STRING_ID = "mpfshell"
     val PRESENTABLE_NAME = "mpfshell"
-    val ID = FacetTypeId<MicroPythonFacet>(STRING_ID)
+    val ID = FacetTypeId<MpfshellFacet>(STRING_ID)
     val LOGO = IconLoader.getIcon("/Logo.png")
 
-    fun getInstance() = findInstance(MicroPythonFacetType::class.java)!!
+    fun getInstance() = findInstance(MpfshellFacetType::class.java)!!
   }
 
-  override fun createDefaultConfiguration() = MicroPythonFacetConfiguration()
+  override fun createDefaultConfiguration() = MpfshellFacetConfiguration()
 
-  override fun createFacet(module: Module, name: String, configuration: MicroPythonFacetConfiguration,
+  override fun createFacet(module: Module, name: String, configuration: MpfshellFacetConfiguration,
                            underlyingFacet: Facet<*>?) =
-      MicroPythonFacet(this, module, name, configuration, underlyingFacet)
+      MpfshellFacet(this, module, name, configuration, underlyingFacet)
 
   override fun isSuitableModuleType(moduleType: ModuleType<*>?) = moduleType is PythonModuleTypeBase
 

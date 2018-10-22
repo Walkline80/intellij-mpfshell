@@ -29,9 +29,9 @@ import javax.swing.JPanel
 /**
  * @author vlan
  */
-class MicroPythonModuleConfigurable(private val module: Module) : Configurable {
-  private val panel: MicroPythonSettingsPanel by lazy {
-    MicroPythonSettingsPanel(module)
+class MpfshellModuleConfigurable(private val module: Module) : Configurable {
+  private val panel: MpfshellSettingsPanel by lazy {
+    MpfshellSettingsPanel(module)
   }
 
   private val enabledCheckbox by lazy {
@@ -43,7 +43,7 @@ class MicroPythonModuleConfigurable(private val module: Module) : Configurable {
   }
 
   override fun isModified(): Boolean {
-    val facet = module.microPythonFacet
+    val facet = module.mpfshellFacet
     val enabled = facet != null
 
     if (enabledCheckbox.isSelected != enabled) return true
@@ -54,7 +54,7 @@ class MicroPythonModuleConfigurable(private val module: Module) : Configurable {
   override fun getDisplayName() = "mpfshell"
 
   override fun apply() {
-    val facet = module.microPythonFacet
+    val facet = module.mpfshellFacet
     val application = ApplicationManager.getApplication()
     val facetManager = FacetManager.getInstance(module)
 
@@ -64,7 +64,7 @@ class MicroPythonModuleConfigurable(private val module: Module) : Configurable {
         facet.updateLibrary()
       }
       else {
-        val facetType = MicroPythonFacetType.getInstance()
+        val facetType = MpfshellFacetType.getInstance()
         val newFacet = facetManager.createFacet(facetType, facetType.defaultFacetName, null)
         panel.apply(newFacet.configuration, newFacet)
 
@@ -92,7 +92,7 @@ class MicroPythonModuleConfigurable(private val module: Module) : Configurable {
   }
 
   override fun reset() {
-    val facet = module.microPythonFacet
+    val facet = module.mpfshellFacet
     val enabled = facet != null
 
     enabledCheckbox.isSelected = enabled

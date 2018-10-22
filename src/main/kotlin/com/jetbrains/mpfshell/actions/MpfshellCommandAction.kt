@@ -20,18 +20,18 @@ import com.intellij.facet.ui.ValidationResult
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.ui.Messages
-import com.jetbrains.mpfshell.settings.MicroPythonFacet
-import com.jetbrains.mpfshell.settings.firstMicroPythonFacet
+import com.jetbrains.mpfshell.settings.MpfshellFacet
+import com.jetbrains.mpfshell.settings.firstMpfshellFacet
 import org.jetbrains.plugins.terminal.LocalTerminalDirectRunner
 import org.jetbrains.plugins.terminal.TerminalView
 
 /**
  * @author vlan
  */
-abstract class MicroPythonCommandAction : AnAction() {
+abstract class MpfshellCommandAction : AnAction() {
   override fun actionPerformed(e: AnActionEvent) {
     val project = e.project ?: return
-    val facet = project.firstMicroPythonFacet ?: return
+    val facet = project.firstMpfshellFacet ?: return
     val provider = facet.configuration.deviceProvider
     val command = getCommand(facet)
     if (command == null) {
@@ -49,7 +49,7 @@ abstract class MicroPythonCommandAction : AnAction() {
 
   override fun update(e: AnActionEvent) {
     val project = e.project ?: return
-    val facet = project.firstMicroPythonFacet
+    val facet = project.firstMpfshellFacet
     if (facet != null) {
       e.presentation.isEnabled = facet.checkValid() == ValidationResult.OK
     }
@@ -59,5 +59,5 @@ abstract class MicroPythonCommandAction : AnAction() {
     }
   }
 
-  protected abstract fun getCommand(facet: MicroPythonFacet): List<String>?
+  protected abstract fun getCommand(facet: MpfshellFacet): List<String>?
 }

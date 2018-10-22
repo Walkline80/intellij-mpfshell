@@ -23,7 +23,7 @@ import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.patterns.PatternCondition
 import com.intellij.util.ProcessingContext
 import com.intellij.util.indexing.FileContent
-import com.jetbrains.mpfshell.devices.MicroPythonDeviceProvider
+import com.jetbrains.mpfshell.devices.MpfshellDeviceProvider
 import com.jetbrains.python.PythonFileType
 import com.jetbrains.python.psi.PyFile
 import com.jetbrains.python.psi.PyFromImportStatement
@@ -32,8 +32,8 @@ import com.jetbrains.python.psi.PyImportStatement
 /**
  * @author Mikhail Golubev
  */
-class MicroPythonFacetDetector : FacetBasedFrameworkDetector<MicroPythonFacet, MicroPythonFacetConfiguration>("mpfshell") {
-  override fun getFacetType() = MicroPythonFacetType.getInstance()
+class MpfshellFacetDetector : FacetBasedFrameworkDetector<MpfshellFacet, MpfshellFacetConfiguration>("mpfshell") {
+  override fun getFacetType() = MpfshellFacetType.getInstance()
 
   override fun createSuitableFilePattern() =
       FileContentPattern.fileContent().with(object : PatternCondition<FileContent>("Contains mpfshell imports") {
@@ -42,7 +42,7 @@ class MicroPythonFacetDetector : FacetBasedFrameworkDetector<MicroPythonFacet, M
           if (!fileIndex.isInContent(fileContent.file) || fileIndex.isInLibraryClasses(fileContent.file)) {
             return false
           }
-          val detected = MicroPythonDeviceProvider.providers
+          val detected = MpfshellDeviceProvider.providers
               .asSequence()
               .flatMap { it.detectedModuleNames.asSequence() }
               .toSet()

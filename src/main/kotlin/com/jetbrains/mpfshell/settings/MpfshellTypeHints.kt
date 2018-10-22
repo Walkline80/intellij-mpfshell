@@ -16,16 +16,7 @@
 
 package com.jetbrains.mpfshell.settings
 
-import com.intellij.application.options.ModuleAwareProjectConfigurable
-import com.intellij.openapi.module.Module
-import com.intellij.openapi.options.Configurable
-import com.intellij.openapi.project.Project
-
 /**
  * @author vlan
  */
-class MicroPythonProjectConfigurable(project: Project)
-  : ModuleAwareProjectConfigurable<Configurable>(project, "mpfshell", null) {
-
-  override fun createModuleConfigurable(module: Module?) = MicroPythonModuleConfigurable(module!!)
-}
+data class MpfshellTypeHints(val paths: List<String>)

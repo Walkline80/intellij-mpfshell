@@ -29,7 +29,7 @@ import com.intellij.util.text.nullize
 import com.intellij.util.ui.FormBuilder
 import com.intellij.util.ui.SwingHelper
 import com.intellij.util.ui.UIUtil
-import com.jetbrains.mpfshell.devices.MicroPythonDeviceProvider
+import com.jetbrains.mpfshell.devices.MpfshellDeviceProvider
 import java.awt.BorderLayout
 import javax.swing.JButton
 import javax.swing.JList
@@ -38,8 +38,8 @@ import javax.swing.JPanel
 /**
  * @author vlan
  */
-class MicroPythonSettingsPanel(private val module: Module) : JPanel() {
-  private val deviceTypeCombo = ComboBox(MicroPythonDeviceProvider.providers)
+class MpfshellSettingsPanel(private val module: Module) : JPanel() {
+  private val deviceTypeCombo = ComboBox(MpfshellDeviceProvider.providers)
   private val label = SwingHelper.createWebHyperlink("")
   private val devicePath = TextFieldWithBrowseButton()
 
@@ -54,7 +54,7 @@ class MicroPythonSettingsPanel(private val module: Module) : JPanel() {
           add(JButton("Detect").apply {
             addActionListener {
               val detectPath = {
-                val detected = module.microPythonFacet?.findSerialPorts(selectedProvider)?.firstOrNull()
+                val detected = module.mpfshellFacet?.findSerialPorts(selectedProvider)?.firstOrNull()
                 ApplicationManager.getApplication().invokeLater {
                   if (detected == null) {
                     Messages.showErrorDialog(this,
@@ -75,8 +75,8 @@ class MicroPythonSettingsPanel(private val module: Module) : JPanel() {
     add(contentPanel, BorderLayout.NORTH)
 
     deviceTypeCombo.apply {
-      renderer = object: ListCellRendererWrapper<MicroPythonDeviceProvider>() {
-        override fun customize(list: JList<*>, value: MicroPythonDeviceProvider, index: Int, selected: Boolean,
+      renderer = object: ListCellRendererWrapper<MpfshellDeviceProvider>() {
+        override fun customize(list: JList<*>, value: MpfshellDeviceProvider, index: Int, selected: Boolean,
                                hasFocus: Boolean) {
           setText(value.presentableName)
         }
@@ -96,22 +96,22 @@ class MicroPythonSettingsPanel(private val module: Module) : JPanel() {
     }
   }
 
-  fun isModified(configuration: MicroPythonFacetConfiguration, facet: MicroPythonFacet): Boolean =
+  fun isModified(configuration: MpfshellFacetConfiguration, facet: MpfshellFacet): Boolean =
       deviceTypeCombo.selectedItem != configuration.deviceProvider
           || devicePath.text.nullize(true) != facet.devicePath
 
   fun getDisplayName(): String = "mpfshell"
 
-  fun apply(configuration: MicroPythonFacetConfiguration, facet: MicroPythonFacet) {
+  fun apply(configuration: MpfshellFacetConfiguration, facet: MpfshellFacet) {
     configuration.deviceProvider = selectedProvider
     facet.devicePath = devicePath.text.nullize(true)
   }
 
-  fun reset(configuration: MicroPythonFacetConfiguration, facet: MicroPythonFacet) {
+  fun reset(configuration: MpfshellFacetConfiguration, facet: MpfshellFacet) {
     deviceTypeCombo.selectedItem = configuration.deviceProvider
     devicePath.text = facet.devicePath ?: ""
   }
 
-  private val selectedProvider: MicroPythonDeviceProvider
-    get() = deviceTypeCombo.selectedItem as MicroPythonDeviceProvider
+  private val selectedProvider: MpfshellDeviceProvider
+    get() = deviceTypeCombo.selectedItem as MpfshellDeviceProvider
 }

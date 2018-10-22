@@ -9,30 +9,30 @@ import com.intellij.openapi.roots.ModuleRootManager
 import com.intellij.openapi.vfs.StandardFileSystems
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VfsUtilCore
-import com.jetbrains.mpfshell.run.MicroPythonRunConfiguration
-import com.jetbrains.mpfshell.settings.MicroPythonFacet
-import com.jetbrains.mpfshell.settings.MicroPythonTypeHints
-import com.jetbrains.mpfshell.settings.MicroPythonUsbId
-import com.jetbrains.mpfshell.settings.microPythonFacet
+import com.jetbrains.mpfshell.run.MpfshellRunConfiguration
+import com.jetbrains.mpfshell.settings.MpfshellFacet
+import com.jetbrains.mpfshell.settings.MpfshellTypeHints
+import com.jetbrains.mpfshell.settings.MpfshellUsbId
+import com.jetbrains.mpfshell.settings.mpfshellFacet
 import com.jetbrains.python.packaging.PyPackageManager
 import com.jetbrains.python.packaging.PyRequirement
 
 /**
  * @author vlan
  */
-class Esp8266DeviceProvider : MicroPythonDeviceProvider {
+class Esp8266DeviceProvider : MpfshellDeviceProvider {
   override val persistentName: String
     get() = "ESP8266"
 
   override val documentationURL: String
     get() = "https://github.com/vlasovskikh/intellij-micropython/wiki/ESP8266"
 
-  override val usbIds: List<MicroPythonUsbId>
-    get() = listOf(MicroPythonUsbId(0x1A86, 0x7523),
-                   MicroPythonUsbId(0x10C4, 0xEA60))
+  override val usbIds: List<MpfshellUsbId>
+    get() = listOf(MpfshellUsbId(0x1A86, 0x7523),
+                   MpfshellUsbId(0x10C4, 0xEA60))
 
-  override val typeHints: MicroPythonTypeHints by lazy {
-    MicroPythonTypeHints(listOf("stdlib", "mpfshell", "esp8266"))
+  override val typeHints: MpfshellTypeHints by lazy {
+    MpfshellTypeHints(listOf("stdlib", "mpfshell", "esp8266"))
   }
 
   override fun getPackageRequirements(sdk: Sdk): List<PyRequirement> {
@@ -42,10 +42,10 @@ class Esp8266DeviceProvider : MicroPythonDeviceProvider {
                                         |websocket_client>=0.34.0,<0.38.0""".trimMargin())
   }
 
-  override fun getRunCommandLineState(configuration: MicroPythonRunConfiguration,
+  override fun getRunCommandLineState(configuration: MpfshellRunConfiguration,
                                       environment: ExecutionEnvironment): CommandLineState? {
     val module = configuration.module ?: return null
-    val facet = module.microPythonFacet ?: return null
+    val facet = module.mpfshellFacet ?: return null
     val pythonPath = facet.pythonPath ?: return null
     val devicePath = facet.devicePath ?: return null
     val rootDir = configuration.project.baseDir ?: return null
@@ -59,7 +59,7 @@ class Esp8266DeviceProvider : MicroPythonDeviceProvider {
         .map { listOf("-X", it) }
         .flatten()
         .toList()
-    val command = listOf(pythonPath, "${MicroPythonFacet.scriptsPath}/microupload.py", "-C", rootDir.path) +
+    val command = listOf(pythonPath, "${MpfshellFacet.scriptsPath}/microupload.py", "-C", rootDir.path) +
         excludes + listOf("-v", devicePath, configuration.path)
 
     return object : CommandLineState(environment) {

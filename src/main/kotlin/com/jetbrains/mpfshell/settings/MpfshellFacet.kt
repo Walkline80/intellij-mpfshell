@@ -30,7 +30,7 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.util.text.nullize
-import com.jetbrains.mpfshell.devices.MicroPythonDeviceProvider
+import com.jetbrains.mpfshell.devices.MpfshellDeviceProvider
 import com.jetbrains.python.facet.FacetLibraryConfigurator
 import com.jetbrains.python.facet.LibraryContributingFacet
 import com.jetbrains.python.packaging.PyPackageManager
@@ -42,9 +42,9 @@ import javax.swing.JComponent
 /**
  * @author vlan
  */
-class MicroPythonFacet(facetType: FacetType<out Facet<*>, *>, module: Module, name: String,
-                       configuration: MicroPythonFacetConfiguration, underlyingFacet: Facet<*>?)
-  : LibraryContributingFacet<MicroPythonFacetConfiguration>(facetType, module, name, configuration, underlyingFacet) {
+class MpfshellFacet(facetType: FacetType<out Facet<*>, *>, module: Module, name: String,
+                    configuration: MpfshellFacetConfiguration, underlyingFacet: Facet<*>?)
+  : LibraryContributingFacet<MpfshellFacetConfiguration>(facetType, module, name, configuration, underlyingFacet) {
 
   companion object {
     private val PLUGIN_ID = "Intellij-Mpfshell"
@@ -97,7 +97,7 @@ class MicroPythonFacet(facetType: FacetType<out Facet<*>, *>, module: Module, na
     return ValidationResult.OK
   }
 
-  fun findSerialPorts(deviceProvider: MicroPythonDeviceProvider): List<String> {
+  fun findSerialPorts(deviceProvider: MpfshellDeviceProvider): List<String> {
     val timeout = 500
     val pythonPath = pythonPath ?: return emptyList()
     val ids = deviceProvider.usbIds.map { (vendor_id, product_id) -> "$vendor_id:$product_id" }
@@ -112,9 +112,9 @@ class MicroPythonFacet(facetType: FacetType<out Facet<*>, *>, module: Module, na
     get() = PythonSdkType.findPythonSdk(module)?.homePath
 
   var devicePath: String?
-    get() = MicroPythonDevicesConfiguration.getInstance(module.project).devicePath.nullize(true)
+    get() = MpfshellDevicesConfiguration.getInstance(module.project).devicePath.nullize(true)
     set(value) {
-      MicroPythonDevicesConfiguration.getInstance(module.project).devicePath = value ?: ""
+      MpfshellDevicesConfiguration.getInstance(module.project).devicePath = value ?: ""
     }
 
   private fun removeLegacyLibraries() {
@@ -122,11 +122,11 @@ class MicroPythonFacet(facetType: FacetType<out Facet<*>, *>, module: Module, na
   }
 }
 
-val Module.microPythonFacet: MicroPythonFacet?
-  get() = FacetManager.getInstance(this).getFacetByType(MicroPythonFacetType.ID)
+val Module.mpfshellFacet: MpfshellFacet?
+  get() = FacetManager.getInstance(this).getFacetByType(MpfshellFacetType.ID)
 
-val Project.firstMicroPythonFacet: MicroPythonFacet?
+val Project.firstMpfshellFacet: MpfshellFacet?
   get() = ModuleManager.getInstance(this).modules
       .asSequence()
-      .map { it.microPythonFacet }
+      .map { it.mpfshellFacet }
       .firstOrNull()

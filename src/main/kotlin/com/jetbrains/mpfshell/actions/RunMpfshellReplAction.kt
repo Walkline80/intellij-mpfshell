@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package com.jetbrains.mpfshell.settings
+package com.jetbrains.mpfshell.actions
+
+import com.jetbrains.mpfshell.settings.MpfshellFacet
 
 /**
- * @author vlan
+ * @author Mikhail Golubev
  */
-data class MicroPythonTypeHints(val paths: List<String>)
+class RunMpfshellReplAction : MpfshellCommandAction() {
+  override fun getCommand(facet: MpfshellFacet): List<String>? {
+    val pythonPath = facet.pythonPath ?: return null
+    val devicePath = facet.devicePath ?: return null
+    return listOf(pythonPath, "${MpfshellFacet.scriptsPath}/microrepl.py", devicePath)
+  }
+}

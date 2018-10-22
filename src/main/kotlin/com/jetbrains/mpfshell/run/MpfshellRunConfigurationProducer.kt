@@ -24,16 +24,16 @@ import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
 import com.intellij.testFramework.LightVirtualFile
-import com.jetbrains.mpfshell.settings.MicroPythonFacetType
+import com.jetbrains.mpfshell.settings.MpfshellFacetType
 import com.jetbrains.python.run.AbstractPythonRunConfiguration
 
 /**
  * @author Mikhail Golubev
  */
-class MicroPythonRunConfigurationProducer : 
-  RunConfigurationProducer<MicroPythonRunConfiguration>(MicroPythonConfigurationType.getInstance()) {
+class MpfshellRunConfigurationProducer :
+  RunConfigurationProducer<MpfshellRunConfiguration>(MpfshellConfigurationType.getInstance()) {
   
-  override fun isConfigurationFromContext(configuration: MicroPythonRunConfiguration, context: ConfigurationContext): Boolean {
+  override fun isConfigurationFromContext(configuration: MpfshellRunConfiguration, context: ConfigurationContext): Boolean {
     val location = context.location ?: return false
     val script = location.psiElement.containingFile ?: return false
     if (!facetEnabledForElement(script)) return false
@@ -42,7 +42,7 @@ class MicroPythonRunConfigurationProducer :
     return configuration.path == virtualFile.path
   }
 
-  override fun setupConfigurationFromContext(configuration: MicroPythonRunConfiguration,
+  override fun setupConfigurationFromContext(configuration: MpfshellRunConfiguration,
                                              context: ConfigurationContext,
                                              sourceElement: Ref<PsiElement>): Boolean {
     val location = context.location ?: return false
@@ -57,7 +57,7 @@ class MicroPythonRunConfigurationProducer :
 
   private fun facetEnabledForElement(elem: PsiElement): Boolean {
     val module = ModuleUtilCore.findModuleForFile(elem.containingFile.virtualFile, elem.project) ?: return false
-    return FacetManager.getInstance(module)?.getFacetByType(MicroPythonFacetType.ID) != null
+    return FacetManager.getInstance(module)?.getFacetByType(MpfshellFacetType.ID) != null
   }
 
   override fun shouldReplace(self: ConfigurationFromContext, other: ConfigurationFromContext) =

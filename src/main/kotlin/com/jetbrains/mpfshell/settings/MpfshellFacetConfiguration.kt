@@ -21,27 +21,27 @@ import com.intellij.facet.ui.FacetEditorContext
 import com.intellij.facet.ui.FacetEditorTab
 import com.intellij.facet.ui.FacetEditorValidator
 import com.intellij.facet.ui.FacetValidatorsManager
-import com.jetbrains.mpfshell.devices.MicroPythonDeviceProvider
+import com.jetbrains.mpfshell.devices.MpfshellDeviceProvider
 import org.jdom.Element
 
 /**
  * @author vlan
  */
-class MicroPythonFacetConfiguration : FacetConfiguration {
-  var deviceProvider = MicroPythonDeviceProvider.default
+class MpfshellFacetConfiguration : FacetConfiguration {
+  var deviceProvider = MpfshellDeviceProvider.default
 
   override fun createEditorTabs(editorContext: FacetEditorContext, validatorsManager: FacetValidatorsManager): Array<FacetEditorTab> {
-    val facet = editorContext.facet as MicroPythonFacet
+    val facet = editorContext.facet as MpfshellFacet
     validatorsManager.registerValidator(object: FacetEditorValidator() {
       override fun check() = facet.checkValid()
     })
-    return arrayOf(MicroPythonFacetEditorTab(this, facet))
+    return arrayOf(MpfshellFacetEditorTab(this, facet))
   }
 
   override fun readExternal(element: Element?) {
     val deviceName = element?.getChild("device")?.getAttribute("name")?.value
-    val device = MicroPythonDeviceProvider.providers.firstOrNull { it.persistentName == deviceName }
-    deviceProvider = device ?: MicroPythonDeviceProvider.default
+    val device = MpfshellDeviceProvider.providers.firstOrNull { it.persistentName == deviceName }
+    deviceProvider = device ?: MpfshellDeviceProvider.default
   }
 
   override fun writeExternal(element: Element?) {
