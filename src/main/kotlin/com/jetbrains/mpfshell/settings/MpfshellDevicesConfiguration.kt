@@ -8,7 +8,7 @@ import com.intellij.util.xmlb.annotations.Attribute
 /**
  * @author vlan
  */
-@State(name = "MicroPythonDevices", storages = arrayOf(Storage(StoragePathMacros.WORKSPACE_FILE)))
+@State(name = "MpfshellDevices", storages = arrayOf(Storage(StoragePathMacros.WORKSPACE_FILE)))
 class MpfshellDevicesConfiguration : PersistentStateComponent<MpfshellDevicesConfiguration> {
 
   companion object {
