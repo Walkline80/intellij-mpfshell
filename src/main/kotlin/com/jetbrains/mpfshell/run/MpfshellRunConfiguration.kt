@@ -64,7 +64,7 @@ class MpfshellRunConfiguration(project: Project, factory: ConfigurationFactory)
     facet.pythonPath ?: throw RuntimeConfigurationError("Python interpreter is not found")
   }
 
-  override fun suggestedName() = "Flash ${PathUtil.getFileName(path)}"
+  override fun suggestedName() = "Runfile ${PathUtil.getFileName(path)}"
 
   override fun writeExternal(element: Element) {
     super.writeExternal(element)
