@@ -1,6 +1,8 @@
 *.iml
 .idea/
+.gradle/
 build/
 venv/
 tmp/
 out/
+resource/
