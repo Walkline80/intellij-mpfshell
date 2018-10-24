@@ -676,6 +676,16 @@ class Timer(object):
         :param id: Timer ID.
         """
 
+    def init(self, *, mode: int = PERIODIC, period: int = -1, callback: Callable = None) -> None:
+		"""
+		Initialise the Timer with the given arguments.
+
+		:param mode: one of ONE_SHOT or PERIODIC
+		:param period: period in microseconds
+		:param callback: Function to be called when the callback is triggered.
+		"""
+		...
+
     def deinit(self) -> None:
         """
         Deinitialises the timer. Stops the timer, and disables the timer peripheral.
