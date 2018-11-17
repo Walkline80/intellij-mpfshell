@@ -43,7 +43,7 @@ class PyboardDeviceProvider : MpfshellDeviceProvider {
     get() = listOf(MpfshellUsbId(0xF055, 0x9800))
 
   override val typeHints: MpfshellTypeHints by lazy {
-    MpfshellTypeHints(listOf("stdlib", "mpfshell"))
+    MpfshellTypeHints(listOf("stdlib", "mpfshell", "micropython"))
   }
 
   override fun getPackageRequirements(sdk: Sdk): List<PyRequirement> {
