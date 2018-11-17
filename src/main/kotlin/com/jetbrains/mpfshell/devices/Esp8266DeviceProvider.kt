@@ -32,7 +32,7 @@ class Esp8266DeviceProvider : MpfshellDeviceProvider {
                    MpfshellUsbId(0x10C4, 0xEA60))
 
   override val typeHints: MpfshellTypeHints by lazy {
-    MpfshellTypeHints(listOf("stdlib", "mpfshell", "esp8266", "micropython"))
+    MpfshellTypeHints(listOf("stdlib", "mpfshell", "esp8266"))
   }
 
   override fun getPackageRequirements(sdk: Sdk): List<PyRequirement> {
