@@ -4,13 +4,14 @@ class MQTTException(Exception):
 	"""
 
 class MQTTClient:
-	def __init__(self, client_id, server, port=0, password=None, keeyalive=0, ssl=False, ssl_params={}):
+	def __init__(self, client_id, server, port=0, user=None, password=None, keeyalive=0, ssl=False, ssl_params={}):
 		"""
 		Create a mqtt client object.
 
 		:param client_id:
 		:param server:
 		:param port:
+		:param user:
 		:param password:
 		:param keeyalive:
 		:param ssl:
